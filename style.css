@@ -346,6 +346,66 @@ img { display: block; max-width: 100%; }
   font-size: 24px;
 }
 
+.expert-toggle {
+  margin-top: 24px;
+  max-width: 620px;
+}
+.expert-toggle-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  color: var(--text);
+  cursor: pointer;
+}
+.expert-toggle-label input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+}
+.expert-toggle-note {
+  margin: 10px 0 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.expert-result {
+  margin-top: 22px;
+  padding-top: 22px;
+  border-top: 1px solid var(--panel-border);
+}
+.expert-result h3 {
+  margin: 0 0 10px;
+}
+.expert-result-text {
+  margin-bottom: 14px;
+  color: var(--muted);
+}
+.expert-code-box {
+  background: var(--accent-soft);
+  border: 1px solid #d8d1eb;
+  border-radius: 18px;
+  padding: 16px 18px;
+  margin-bottom: 16px;
+  overflow-wrap: anywhere;
+}
+.expert-code-box code {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--accent-dark);
+}
+.expert-actions-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.copy-status {
+  min-height: 22px;
+  color: var(--accent-dark);
+  font-weight: 600;
+}
+
 @media (max-width: 1024px) {
   .hero-grid { grid-template-columns: 1fr; }
   .hero-collage { max-width: 680px; }
