@@ -33,17 +33,15 @@
           <h1>Найди свой путь<br>к будущей профессии</h1>
           <p class="hero-subtitle">Помогаем школьнику понять, какой профиль обучения ему ближе</p>
           <p class="hero-text">Ответь на вопросы теста и узнай, какой профиль обучения подходит именно тебе.</p>
+
           <div class="hero-actions">
             <a href="#test" class="primary-btn" id="heroStart">Начать тест</a>
             <a href="#profiles" class="secondary-btn">Подробнее</a>
           </div>
 
-          <div class="expert-toggle">
-            <label class="expert-toggle-label">
-              <input type="checkbox" id="expertModeToggle">
-              <span>Экспертный режим</span>
-            </label>
-            <p class="expert-toggle-note">В этом режиме после завершения теста будет показана бинарная строка ответов для экспертной анкеты.</p>
+          <div class="expert-entry">
+            <button class="expert-entry-btn" id="openExpertLoginBtn" type="button">Войти в экспертный режим</button>
+            <p class="expert-entry-note">Доступ к экспертной версии открывается по коду. После входа система покажет отдельные подсказки и бинарную строку в конце теста.</p>
           </div>
         </div>
 
@@ -140,7 +138,7 @@
           <p class="expert-text">Если вы уже учитесь или работаете в одном из профилей, вы можете пройти экспертную версию теста и помочь улучшить точность системы.</p>
         </div>
         <div class="expert-actions">
-          <a href="#test" class="light-btn">Перейти в экспертный режим</a>
+          <button type="button" class="light-btn" id="expertCtaButton">Перейти в экспертный режим</button>
         </div>
       </div>
     </section>
@@ -152,13 +150,24 @@
           <h2>Пройдите тест</h2>
         </div>
 
+        <div id="expertModeBanner" class="mode-banner hidden">
+          <strong>Экспертный режим включён.</strong>
+          После завершения теста вы увидите бинарную строку ответов и сможете сразу перейти в экспертную анкету.
+        </div>
+
         <section class="test-panel" id="startScreen">
-          <h3>Перед началом</h3>
-          <p>В тесте нет правильных и неправильных ответов. Выбирайте тот вариант, который кажется вам более близким.</p>
+          <div class="test-mode-line">
+            <span id="modeChip" class="mode-chip">Обычный режим</span>
+          </div>
+          <h3 id="startTitle">Перед началом</h3>
+          <p id="startDescription">В тесте нет правильных и неправильных ответов. Выбирайте тот вариант, который кажется вам более близким.</p>
           <button class="primary-btn" id="startButton" type="button">Начать тест</button>
         </section>
 
         <section class="test-panel hidden" id="testScreen">
+          <div class="test-mode-line">
+            <span id="testModeChip" class="mode-chip">Обычный режим</span>
+          </div>
           <div class="test-top">
             <div>
               <p class="muted-label" id="questionCounter">Вопрос 1 из 56</p>
@@ -176,6 +185,9 @@
         </section>
 
         <section class="test-panel hidden" id="resultScreen">
+          <div class="test-mode-line">
+            <span id="resultModeChip" class="mode-chip">Обычный режим</span>
+          </div>
           <p class="muted-label">Результат теста</p>
           <h3 id="resultTitle">Ваш результат</h3>
           <p class="result-description" id="resultDescription"></p>
@@ -218,6 +230,19 @@
     <p class="muted-label" id="dialogTag">Профиль</p>
     <h3 id="dialogTitle">Название профиля</h3>
     <p id="dialogText">Описание профиля</p>
+  </dialog>
+
+  <dialog class="login-dialog" id="expertLoginDialog">
+    <button class="dialog-close" id="closeExpertDialog" type="button" aria-label="Закрыть">×</button>
+    <p class="muted-label">Доступ для экспертов</p>
+    <h3>Вход в экспертный режим</h3>
+    <p class="login-text">Введите код доступа, чтобы включить экспертный режим.</p>
+    <form id="expertLoginForm" class="login-form">
+      <label class="login-label" for="expertPasswordInput">Код доступа</label>
+      <input class="login-input" id="expertPasswordInput" type="password" placeholder="Введите код">
+      <p class="login-error" id="expertPasswordError"></p>
+      <button class="primary-btn" type="submit">Продолжить</button>
+    </form>
   </dialog>
 
   <script src="main.js"></script>
