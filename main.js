@@ -235,7 +235,7 @@ var totalQuestions = questions.length;
 var answers = '';
 var currentIndex = 0;
 var isExpertMode = false;
-var expertFormUrl = 'https://forms.yandex.ru/';
+var expertFormUrl = 'https://forms.yandex.ru/u/69b40063e010db256f505c70/';
 
 var startScreen = document.getElementById('startScreen');
 var testScreen = document.getElementById('testScreen');
