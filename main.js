@@ -234,6 +234,8 @@ var keys = Object.keys(experts);
 var totalQuestions = questions.length;
 var answers = '';
 var currentIndex = 0;
+var isExpertMode = false;
+var expertFormUrl = 'https://forms.yandex.ru/';
 
 var startScreen = document.getElementById('startScreen');
 var testScreen = document.getElementById('testScreen');
@@ -256,6 +258,12 @@ var dialogTitle = document.getElementById('dialogTitle');
 var dialogText = document.getElementById('dialogText');
 var closeDialog = document.getElementById('closeDialog');
 var detailButtons = document.querySelectorAll('[data-profile]');
+var expertModeToggle = document.getElementById('expertModeToggle');
+var expertResultBlock = document.getElementById('expertResultBlock');
+var expertBinaryOutput = document.getElementById('expertBinaryOutput');
+var copyExpertCodeBtn = document.getElementById('copyExpertCodeBtn');
+var copyExpertCodeStatus = document.getElementById('copyExpertCodeStatus');
+var expertFormLink = document.getElementById('expertFormLink');
 
 function hammingDistance(str1, str2) {
     var i, distance = 0;
@@ -307,6 +315,17 @@ function showTest() {
     renderQuestion();
 }
 
+function updateExpertBlock() {
+    if (isExpertMode && answers) {
+        expertBinaryOutput.textContent = answers;
+        expertFormLink.href = expertFormUrl;
+        expertResultBlock.classList.remove('hidden');
+    } else {
+        expertResultBlock.classList.add('hidden');
+        expertBinaryOutput.textContent = '';
+    }
+}
+
 function showResult() {
     var result = getClosestProfile(answers);
     var profileData = profiles[result.profileId];
@@ -318,6 +337,7 @@ function showResult() {
     resultTitle.textContent = profileData.title;
     resultDescription.textContent = profileData.description;
     resultNote.textContent = 'Это предварительная рекомендация. В текущей версии алгоритм сравнивает ваши ответы с экспертными шаблонами и помогает понять, какой профиль вам ближе.';
+    updateExpertBlock();
 }
 
 function registerAnswer(value) {
@@ -335,6 +355,12 @@ function registerAnswer(value) {
 function resetTest() {
     answers = '';
     currentIndex = 0;
+    if (copyExpertCodeStatus) {
+        copyExpertCodeStatus.textContent = '';
+    }
+    if (expertResultBlock) {
+        expertResultBlock.classList.add('hidden');
+    }
     showTest();
 }
 
@@ -356,6 +382,24 @@ function openProfileDialog(profileKey) {
     profileDialog.showModal();
 }
 
+function copyExpertCode() {
+    if (!answers) {
+        copyExpertCodeStatus.textContent = 'Строка ответов пока не сформирована.';
+        return;
+    }
+
+    if (!navigator.clipboard || !navigator.clipboard.writeText) {
+        copyExpertCodeStatus.textContent = 'Копирование не поддерживается этим браузером.';
+        return;
+    }
+
+    navigator.clipboard.writeText(answers).then(function () {
+        copyExpertCodeStatus.textContent = 'Строка скопирована.';
+    }).catch(function () {
+        copyExpertCodeStatus.textContent = 'Не удалось скопировать строку.';
+    });
+}
+
 startButton.addEventListener('click', resetTest);
 restartButton.addEventListener('click', resetTest);
 door1.addEventListener('click', function () { registerAnswer('0'); });
@@ -368,6 +412,22 @@ profileDialog.addEventListener('click', function (event) {
         profileDialog.close();
     }
 });
+
+if (expertModeToggle) {
+    expertModeToggle.addEventListener('change', function () {
+        isExpertMode = expertModeToggle.checked;
+        if (copyExpertCodeStatus) {
+            copyExpertCodeStatus.textContent = '';
+        }
+        if (resultScreen && !resultScreen.classList.contains('hidden')) {
+            updateExpertBlock();
+        }
+    });
+}
+
+if (copyExpertCodeBtn) {
+    copyExpertCodeBtn.addEventListener('click', copyExpertCode);
+}
 
 detailButtons.forEach(function (button) {
     button.addEventListener('click', function () {
