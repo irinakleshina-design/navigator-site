@@ -37,7 +37,16 @@
             <a href="#test" class="primary-btn" id="heroStart">Начать тест</a>
             <a href="#profiles" class="secondary-btn">Подробнее</a>
           </div>
+
+          <div class="expert-toggle">
+            <label class="expert-toggle-label">
+              <input type="checkbox" id="expertModeToggle">
+              <span>Экспертный режим</span>
+            </label>
+            <p class="expert-toggle-note">В этом режиме после завершения теста будет показана бинарная строка ответов для экспертной анкеты.</p>
+          </div>
         </div>
+
         <div class="hero-collage" aria-label="Коллаж с учениками">
           <img src="assets/man2.png" alt="Ученик на занятии">
           <img src="assets/woman1.png" alt="Ученица за ноутбуком">
@@ -171,6 +180,20 @@
           <h3 id="resultTitle">Ваш результат</h3>
           <p class="result-description" id="resultDescription"></p>
           <div class="result-note" id="resultNote">Это предварительная рекомендация.</div>
+
+          <div id="expertResultBlock" class="expert-result hidden">
+            <h3>Экспертная строка ответов</h3>
+            <p class="expert-result-text">Скопируйте эту строку и вставьте её в экспертную анкету.</p>
+            <div class="expert-code-box">
+              <code id="expertBinaryOutput"></code>
+            </div>
+            <div class="expert-actions-row">
+              <button class="secondary-btn" id="copyExpertCodeBtn" type="button">Скопировать строку</button>
+              <a class="primary-btn" id="expertFormLink" href="https://forms.yandex.ru/" target="_blank" rel="noopener noreferrer">Открыть экспертную анкету</a>
+            </div>
+            <p class="copy-status" id="copyExpertCodeStatus"></p>
+          </div>
+
           <button class="primary-btn" id="restartButton" type="button">Пройти заново</button>
         </section>
       </div>
