@@ -1,4 +1,6 @@
 'use strict';
+console.log('admin.js v12 loaded');
+console.log('ADMIN_PASSWORD from js =', ADMIN_PASSWORD);
 
 var ADMIN_PASSWORD = 'ADMIN2026';
 var DATA_URL = './data/experts.json';
