@@ -21,6 +21,15 @@ function setStatus(text) {
   adminStatus.textContent = text || '';
 }
 
+function escapeHtml(value) {
+  return String(value == null ? '' : value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 function renderRecords(records) {
   recordsList.innerHTML = '';
   recordsCount.textContent = 'Записей: ' + records.length;
@@ -74,21 +83,14 @@ function renderRecords(records) {
   });
 }
 
-function escapeHtml(value) {
-  return String(value)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
-}
-
 function loadRecords() {
+  adminError.textContent = '';
   setStatus('Загружаю записи...');
+
   fetch(DATA_URL + '?t=' + Date.now(), { cache: 'no-store' })
     .then(function (response) {
       if (!response.ok) {
-        throw new Error('Не удалось загрузить файл experts.json');
+        throw new Error('Не удалось загрузить experts.json');
       }
       return response.json();
     })
@@ -96,6 +98,7 @@ function loadRecords() {
       if (!Array.isArray(data)) {
         throw new Error('Файл experts.json имеет неверный формат');
       }
+
       recordsCache = data;
       renderRecords(recordsCache);
       setStatus('Записи загружены.');
@@ -107,8 +110,8 @@ function loadRecords() {
 }
 
 function deleteRecord(index, button) {
-  if (!DELETE_API_URL || DELETE_API_URL === 'PASTE_DELETE_FUNCTION_URL_HERE') {
-    adminError.textContent = 'Сначала нужно вставить адрес delete-функции в admin.js';
+  if (!DELETE_API_URL || DELETE_API_URL === 'ВСТАВЬ_СЮДА_URL_DELETE_ФУНКЦИИ') {
+    adminError.textContent = 'Не вставлен URL delete-функции в admin.js';
     return;
   }
 
@@ -140,12 +143,12 @@ function deleteRecord(index, button) {
         } catch (e) {
           data = {};
         }
-        return { ok: response.ok, data: data };
+        return { ok: response.ok, status: response.status, data: data };
       });
     })
     .then(function (result) {
       if (!result.ok || !result.data.ok) {
-        throw new Error(result.data.error || 'Не удалось удалить запись');
+        throw new Error(result.data.error || ('Ошибка удаления. Код: ' + result.status));
       }
 
       recordsCache.splice(index, 1);
@@ -154,7 +157,7 @@ function deleteRecord(index, button) {
 
       setTimeout(function () {
         loadRecords();
-      }, 700);
+      }, 500);
     })
     .catch(function (error) {
       adminError.textContent = error.message;
@@ -162,6 +165,7 @@ function deleteRecord(index, button) {
       button.disabled = false;
     });
 }
+
 adminLoginBtn.addEventListener('click', function () {
   adminError.textContent = '';
 
@@ -176,6 +180,5 @@ adminLoginBtn.addEventListener('click', function () {
 });
 
 reloadRecordsBtn.addEventListener('click', function () {
-  adminError.textContent = '';
   loadRecords();
 });
