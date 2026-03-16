@@ -133,7 +133,13 @@ function deleteRecord(index, button) {
     })
   })
     .then(function (response) {
-      return response.json().then(function (data) {
+      return response.text().then(function (text) {
+        var data = {};
+        try {
+          data = text ? JSON.parse(text) : {};
+        } catch (e) {
+          data = {};
+        }
         return { ok: response.ok, data: data };
       });
     })
@@ -145,6 +151,10 @@ function deleteRecord(index, button) {
       recordsCache.splice(index, 1);
       renderRecords(recordsCache);
       setStatus('Запись удалена.');
+
+      setTimeout(function () {
+        loadRecords();
+      }, 700);
     })
     .catch(function (error) {
       adminError.textContent = error.message;
@@ -152,7 +162,6 @@ function deleteRecord(index, button) {
       button.disabled = false;
     });
 }
-
 adminLoginBtn.addEventListener('click', function () {
   adminError.textContent = '';
 
