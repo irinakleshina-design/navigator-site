@@ -125,12 +125,13 @@ function deleteRecord(index, button) {
   adminError.textContent = '';
   setStatus('Удаляю запись...');
 
-  fetch(DELETE_API_URL, {
+  var formBody = new URLSearchParams();
+  formBody.append('admin_password', ADMIN_PASSWORD);
+  formBody.append('binary_string', record.binary_string);
+
+fetch(DELETE_API_URL, {
   method: 'POST',
-  body: JSON.stringify({
-    admin_password: ADMIN_PASSWORD,
-    binary_string: record.binary_string
-  })
+  body: formBody
 })
     .then(function (response) {
       return response.text().then(function (text) {
