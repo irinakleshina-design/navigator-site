@@ -126,15 +126,12 @@ function deleteRecord(index, button) {
   setStatus('Удаляю запись...');
 
   fetch(DELETE_API_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      admin_password: ADMIN_PASSWORD,
-      binary_string: record.binary_string
-    })
+  method: 'POST',
+  body: JSON.stringify({
+    admin_password: ADMIN_PASSWORD,
+    binary_string: record.binary_string
   })
+})
     .then(function (response) {
       return response.text().then(function (text) {
         var data = {};
