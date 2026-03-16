@@ -127,7 +127,7 @@ function deleteRecord(index, button) {
 
   var formBody = new URLSearchParams();
   formBody.append('admin_password', ADMIN_PASSWORD);
-  formBody.append('binary_string', record.binary_string);
+  formBody.append('created_at', record.created_at || '');
 
 fetch(DELETE_API_URL, {
   method: 'POST',
