@@ -2,7 +2,7 @@
 
 var ADMIN_PASSWORD = 'ADMIN2026';
 var DATA_URL = './data/experts.json';
-var DELETE_API_URL = 'PASTE_DELETE_FUNCTION_URL_HERE';
+var DELETE_API_URL = 'https://functions.yandexcloud.net/d4epfrfrl5f9avgkm0h0';
 
 var adminLoginBox = document.getElementById('adminLoginBox');
 var adminPanel = document.getElementById('adminPanel');
